@@ -40,10 +40,6 @@ twitter_df = pd.read_csv(url)
 
 dates = twitter_df['Date'].to_list()
 
-
-# In[11]:
-
-
 def dictionary_of_metrics(items):
 
   ### Code Here
@@ -57,16 +53,6 @@ def dictionary_of_metrics(items):
         maximum = max(items)
         dictionary = {'mean': round(mean,2),'median': median,'variance': round(variance,2),'standard deviation': round(standard_deviation,2),'min': minimum,'max': maximum}
         return(dictionary)
-
-
-# In[12]:
-
-
-dictionary_of_metrics(gauteng)
-
-
-# In[15]:
-
 
 def five_num_summ(items):
 
@@ -82,26 +68,12 @@ def five_num_summ(items):
     return(dictionary)
     
 
-
-# In[16]:
-
-
-five_num_summ(gauteng)
-
-
-# In[155]:
-
-
 def date_parser(list_dates):
 
   ### Code Here
     new_list = (dates[0:10] for dates in list_dates)
     answer = list(new_list)
     return(answer)
-
-
-# In[156]:
-
 
 dates = ['2019-11-29 12:50:54',
          '2019-11-29 12:46:53',
@@ -111,24 +83,8 @@ dates = ['2019-11-29 12:50:54',
          '2019-11-29 11:28:40']
 
 
-# In[157]:
-
-
-date_parser(dates)
-
-
-# In[1]:
-
-
 def extract_municipality_hashtags(df):
     search = twitter_df["Tweets"].str.split()
     #solution = twitter_df["Tweets"].apply(lambda df: [municipality_dict[key] if key in list(municipality_dict.keys()) else np.nan for key in search])
     solution = twitter_df["Tweets"].apply(lambda df: [municipality_dict[key] for key in search if key in list(municipality_dict.keys())]).head(10)
     return(solution)
-
-
-# In[ ]:
-
-
-
-
