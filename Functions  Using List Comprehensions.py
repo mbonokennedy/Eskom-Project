@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 
@@ -40,6 +39,10 @@ twitter_df = pd.read_csv(url)
 
 dates = twitter_df['Date'].to_list()
 
+
+# In[11]:
+
+## Function 1
 def dictionary_of_metrics(items):
 
   ### Code Here
@@ -47,44 +50,34 @@ def dictionary_of_metrics(items):
         sorted_list = sorted(items)
         median = np.median(sorted_list)
         mean = sum(items)/number
-        variance = np.var(sorted_list)
+        ## Updated Variance formula because np.var does not work
+        variance = sum((item - mean)**2 for item in items) / (number - 1)
         standard_deviation = variance ** (1/2)
         minimum = min(items)
         maximum = max(items)
-        dictionary = {'mean': round(mean,2),'median': median,'variance': round(variance,2),'standard deviation': round(standard_deviation,2),'min': minimum,'max': maximum}
+        dictionary = {'mean': round(mean,2),'median': median,'var': round(variance,2),'std': round(standard_deviation,2),'min': minimum,'max': maximum}
         return(dictionary)
 
-def five_num_summ(items):
+
+# In[12]:
+
+
+dictionary_of_metrics(gauteng)
+
+
+# In[15]:
+
+## Function 2
+def five_num_summary(items):
 
   ### Code Here
     number = len(items)
     sorted_list = sorted(items)
     median = np.median(sorted_list)
-    Quarter_1 = np.quantile(sorted_list,0.25,interpolation = 'lower')
-    Quarter_3 = np.quantile(sorted_list,0.75,interpolation = 'lower')
+    ## Changed your interpolation to be more accurate
+    Quarter_1 = np.quantile(sorted_list,0.25,interpolation = 'linear')
+    Quarter_3 = np.quantile(sorted_list,0.75,interpolation = 'linear')
     minimum = min(items)
     maximum = max(items)
     dictionary = {'max': maximum,'median': median,'min': minimum,'q1': Quarter_1,'q3': Quarter_3}
     return(dictionary)
-    
-
-def date_parser(list_dates):
-
-  ### Code Here
-    new_list = (dates[0:10] for dates in list_dates)
-    answer = list(new_list)
-    return(answer)
-
-dates = ['2019-11-29 12:50:54',
-         '2019-11-29 12:46:53',
-         '2019-11-29 12:46:10',
-         '2019-11-29 14:33:36',
-         '2019-11-29 12:17:43',
-         '2019-11-29 11:28:40']
-
-
-def extract_municipality_hashtags(df):
-    search = twitter_df["Tweets"].str.split()
-    #solution = twitter_df["Tweets"].apply(lambda df: [municipality_dict[key] if key in list(municipality_dict.keys()) else np.nan for key in search])
-    solution = twitter_df["Tweets"].apply(lambda df: [municipality_dict[key] for key in search if key in list(municipality_dict.keys())]).head(10)
-    return(solution)
