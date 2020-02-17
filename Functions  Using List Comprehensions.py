@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 
@@ -41,6 +40,7 @@ twitter_df = pd.read_csv(url)
 dates = twitter_df['Date'].to_list()
 
 
+<<<<<<< HEAD
 
     def number_of_tweets_per_day(df):
     twitter_df['Dates'] = df['Date'].apply(lambda x : x.split(' ')[0])
@@ -94,3 +94,46 @@ dates = twitter_df['Date'].to_list()
         df['Without Stop Words'][i] = [x for x in df['Without Stop Words'][i] if "http" not in x]
         
         return(df)
+=======
+# In[11]:
+
+## Function 1
+def dictionary_of_metrics(items):
+
+  ### Code Here
+        number = len(items)
+        sorted_list = sorted(items)
+        median = np.median(sorted_list)
+        mean = sum(items)/number
+        ## Updated Variance formula because np.var does not work
+        variance = sum((item - mean)**2 for item in items) / (number - 1)
+        standard_deviation = variance ** (1/2)
+        minimum = min(items)
+        maximum = max(items)
+        dictionary = {'mean': round(mean,2),'median': median,'var': round(variance,2),'std': round(standard_deviation,2),'min': minimum,'max': maximum}
+        return(dictionary)
+
+
+# In[12]:
+
+
+dictionary_of_metrics(gauteng)
+
+
+# In[15]:
+
+## Function 2
+def five_num_summary(items):
+
+  ### Code Here
+    number = len(items)
+    sorted_list = sorted(items)
+    median = np.median(sorted_list)
+    ## Changed your interpolation to be more accurate
+    Quarter_1 = np.quantile(sorted_list,0.25,interpolation = 'linear')
+    Quarter_3 = np.quantile(sorted_list,0.75,interpolation = 'linear')
+    minimum = min(items)
+    maximum = max(items)
+    dictionary = {'max': maximum,'median': median,'min': minimum,'q1': Quarter_1,'q3': Quarter_3}
+    return(dictionary)
+>>>>>>> adc6c16146c82b36f30f0458ddc6b28f990b0522
