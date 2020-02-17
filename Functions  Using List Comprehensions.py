@@ -87,13 +87,13 @@ dates = twitter_df['Date'].to_list()
                                     'within', '‘re', 'back', 'such', 'already', 'several', 'side', 'whence', 'me', 'same', 'were', 
                                     'it', 'every', 'third', 'together']}
 
-    df['Without Stop Words'] = df['Tweets'].apply(str.lower).apply(str.split)
+     df['Without Stop Words'] = df['Tweets'].apply(str.split)
 
-    for i in range(len(twitter_df)):
-        df['Without Stop Words'][i] = [x for x in df['Without Stop Words'][i] if x not in stop_words_dict['stopwords']]
-        df['Without Stop Words'][i] = [x for x in df['Without Stop Words'][i] if "http" not in x]
-        
-        return(df)
+    for ref in range(len(twitter_df)):
+        df['Without Stop Words'][ref] = [trial.lower() for trial in df['Without Stop Words'][ref] if trial not in stop_words_dict['stopwords']]
+        df['Without Stop Words'][ref] = [option.lower() for option in df['Without Stop Words'][ref] if option not in second_dict['option']]
+       
+    return(df)
 =======
 # In[11]:
 
