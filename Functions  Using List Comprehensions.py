@@ -40,51 +40,57 @@ twitter_df = pd.read_csv(url)
 
 dates = twitter_df['Date'].to_list()
 
-def dictionary_of_metrics(items):
 
-  ### Code Here
-        number = len(items)
-        sorted_list = sorted(items)
-        median = np.median(sorted_list)
-        mean = sum(items)/number
-        variance = np.var(sorted_list)
-        standard_deviation = variance ** (1/2)
-        minimum = min(items)
-        maximum = max(items)
-        dictionary = {'mean': round(mean,2),'median': median,'variance': round(variance,2),'standard deviation': round(standard_deviation,2),'min': minimum,'max': maximum}
-        return(dictionary)
 
-def five_num_summ(items):
-
-  ### Code Here
-    number = len(items)
-    sorted_list = sorted(items)
-    median = np.median(sorted_list)
-    Quarter_1 = np.quantile(sorted_list,0.25,interpolation = 'lower')
-    Quarter_3 = np.quantile(sorted_list,0.75,interpolation = 'lower')
-    minimum = min(items)
-    maximum = max(items)
-    dictionary = {'max': maximum,'median': median,'min': minimum,'q1': Quarter_1,'q3': Quarter_3}
-    return(dictionary)
+    def number_of_tweets_per_day(df):
+    twitter_df['Dates'] = df['Date'].apply(lambda x : x.split(' ')[0])
+    twitter_dfs = twitter_df.groupby(twitter_df['Dates']).count()
     
+    return(twitter_dfs)
 
-def date_parser(list_dates):
+    def stop_words_http_remover(df):
+    
+    stop_words_dict = {'stopwords':['where', 'done', 'if', 'before', 'll', 'very', 'keep', 'something', 
+                                    'nothing', 'thereupon', 'may', 'why', '’s', 'therefore', 'you', 'with', 
+                                    'towards', 'make', 'really', 'few', 'former', 'during', 'mine', 'do', 
+                                    'would', 'of', 'off', 'six', 'yourself', 'becoming', 'through', 'seeming', 
+                                    'hence', 'us', 'anywhere', 'regarding', 'whole', 'down', 'seem', 'whereas', 
+                                    'to', 'their', 'various', 'thereafter', '‘d', 'above', 'put', 'sometime', 
+                                    'moreover', 'whoever', 'although', 'at', 'four', 'each', 'among', 'whatever', 
+                                    'any', 'anyhow', 'herein', 'become', 'last', 'between', 'still', 'was', 'almost', 
+                                    'twelve', 'used', 'who', 'go', 'not', 'enough', 'well', '’ve', 'might', 'see', 
+                                    'whose', 'everywhere', 'yourselves', 'across', 'myself', 'further', 'did', 'then', 
+                                    'is', 'except', 'up', 'take', 'became', 'however', 'many', 'thence', 'onto', '‘m', 
+                                    'my', 'own', 'must', 'wherein', 'elsewhere', 'behind', 'becomes', 'alone', 'due', 
+                                    'being', 'neither', 'a', 'over', 'beside', 'fifteen', 'meanwhile', 'upon', 'next', 
+                                    'forty', 'what', 'less', 'and', 'please', 'toward', 'about', 'below', 'hereafter', 
+                                    'whether', 'yet', 'nor', 'against', 'whereupon', 'top', 'first', 'three', 'show', 
+                                    'per', 'five', 'two', 'ourselves', 'whenever', 'get', 'thereby', 'noone', 'had', 
+                                    'now', 'everyone', 'everything', 'nowhere', 'ca', 'though', 'least', 'so', 'both', 
+                                    'otherwise', 'whereby', 'unless', 'somewhere', 'give', 'formerly', '’d', 'under', 
+                                    'while', 'empty', 'doing', 'besides', 'thus', 'this', 'anyone', 'its', 'after', 
+                                    'bottom', 'call', 'n’t', 'name', 'even', 'eleven', 'by', 'from', 'when', 'or', 
+                                    'anyway', 'how', 'the', 'all', 'much', 'another', 'since', 'hundred', 'serious', 
+                                    '‘ve', 'ever', 'out', 'full', 'themselves', 'been', 'in', "'d", 'wherever', 'part', 
+                                    'someone', 'therein', 'can', 'seemed', 'hereby', 'others', "'s", "'re", 'most', 
+                                    'one', "n't", 'into', 'some', 'will', 'these', 'twenty', 'here', 'as', 'nobody', 
+                                    'also', 'along', 'than', 'anything', 'he', 'there', 'does', 'we', '’ll', 'latterly', 
+                                    'are', 'ten', 'hers', 'should', 'they', '‘s', 'either', 'am', 'be', 'perhaps', '’re', 
+                                    'only', 'namely', 'sixty', 'made', "'m", 'always', 'those', 'have', 'again', 'her', 
+                                    'once', 'ours', 'herself', 'else', 'has', 'nine', 'more', 'sometimes', 'your', 'yours', 
+                                    'that', 'around', 'his', 'indeed', 'mostly', 'cannot', '‘ll', 'too', 'seems', '’m', 
+                                    'himself', 'latter', 'whither', 'amount', 'other', 'nevertheless', 'whom', 'for', 
+                                    'somehow', 'beforehand', 'just', 'an', 'beyond', 'amongst', 'none', "'ve", 'say', 
+                                    'via', 'but', 'often', 're', 'our', 'because', 'rather', 'using', 'without', 'throughout', 
+                                    'on', 'she', 'never', 'eight', 'no', 'hereupon', 'them', 'whereafter', 'quite', 'which', 
+                                    'move', 'thru', 'until', 'afterwards', 'fifty', 'i', 'itself', 'n‘t', 'him', 'could', 'front', 
+                                    'within', '‘re', 'back', 'such', 'already', 'several', 'side', 'whence', 'me', 'same', 'were', 
+                                    'it', 'every', 'third', 'together']}
 
-  ### Code Here
-    new_list = (dates[0:10] for dates in list_dates)
-    answer = list(new_list)
-    return(answer)
+    df['Without Stop Words'] = df['Tweets'].apply(str.lower).apply(str.split)
 
-dates = ['2019-11-29 12:50:54',
-         '2019-11-29 12:46:53',
-         '2019-11-29 12:46:10',
-         '2019-11-29 14:33:36',
-         '2019-11-29 12:17:43',
-         '2019-11-29 11:28:40']
-
-
-def extract_municipality_hashtags(df):
-    search = twitter_df["Tweets"].str.split()
-    #solution = twitter_df["Tweets"].apply(lambda df: [municipality_dict[key] if key in list(municipality_dict.keys()) else np.nan for key in search])
-    solution = twitter_df["Tweets"].apply(lambda df: [municipality_dict[key] for key in search if key in list(municipality_dict.keys())]).head(10)
-    return(solution)
+    for i in range(len(twitter_df)):
+        df['Without Stop Words'][i] = [x for x in df['Without Stop Words'][i] if x not in stop_words_dict['stopwords']]
+        df['Without Stop Words'][i] = [x for x in df['Without Stop Words'][i] if "http" not in x]
+        
+        return(df)
