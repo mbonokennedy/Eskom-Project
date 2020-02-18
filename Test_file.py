@@ -30,4 +30,15 @@ def five_num_summary(items):
     dictionary = {'max': maximum,'median': median,'min': minimum,'q1': Quarter_1,'q3': Quarter_3}
     return(dictionary)
 
+
+### END FUNCTION
+
+### START FUNCTION
+def date_parser(dates):
+    # your code here
+    
+    new_list = (dates[0:10] for dates in dates)
+    answer = list(new_list)
+    return(answer)
+
 ### END FUNCTION
