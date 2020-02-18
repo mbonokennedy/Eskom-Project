@@ -39,12 +39,16 @@ twitter_df = pd.read_csv(url)
 
 dates = twitter_df['Date'].to_list()
 
-#Function 5 as per request
-def number_of_tweets_per_day(df):
-    twitter_df['Dates'] = df['Date'].apply(lambda x : x.split(' ')[0])
-    twitter_dfs = twitter_df.groupby(twitter_df['Dates']).count()
-    
-    return(twitter_dfs)
+F5
+def number_of_tweets_per_day(data):
+    df=data
+    df["Date"]= pd.to_datetime(df["Date"])
+    df['Date'] = df["Date"].map(lambda x: x.strftime("%d/%m/%Y"))
+    df.set_index('Date', inplace = True)
+    grouped_df = df.groupby(['Date'])["Tweets"].count()
+    grouped_df = grouped_df.to_frame()
+    return grouped_df
+   
 
 
 # Function 6 as per request
