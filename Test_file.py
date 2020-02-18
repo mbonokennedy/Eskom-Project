@@ -77,3 +77,17 @@ def number_of_tweets_per_day(df):
     return(twitter_dfs)#.iloc[])
 
 ### END FUNCTION
+
+### START FUNCTION
+def number_of_tweets_per_day(df):
+    # your code here
+    #Write into a column  called dates and split the time and date
+    df['Date'] = df['Date'].apply(lambda ref : ref.split(' ')[0])
+    #Drop both columns
+    trial = df.drop(columns=['Date'],axis = 1)
+    #Count the number of tweets per date
+    twitter_dfs = trial.groupby(df['Date']).count()
+    
+    return(twitter_dfs)#.iloc[])
+
+### END FUNCTION
