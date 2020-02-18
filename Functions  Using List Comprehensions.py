@@ -39,17 +39,37 @@ twitter_df = pd.read_csv(url)
 
 dates = twitter_df['Date'].to_list()
 
-#Function 5 as per request
-def number_of_tweets_per_day(df):
-    twitter_df['Dates'] = df['Date'].apply(lambda x : x.split(' ')[0])
-    twitter_dfs = twitter_df.groupby(twitter_df['Dates']).count()
+### START FUNCTION 3
+### Updated the function as per request 
+def date_parser(dates):
+    # your code here
     
-    return(twitter_dfs)
+    new_list = (dates[0:10] for dates in dates)
+    answer = list(new_list)
+    return(answer)
 
+### END FUNCTION
 
-# Function 6 as per request
-def word_spliter(df):
+### START FUNCTION 4
+def extract_municipality_hashtags(df):
+    # your code here
+    municipality_dict = { '@CityofCTAlerts' : 'Cape Town',
+                '@CityPowerJhb' : 'Johannesburg',
+                '@eThekwiniM' : 'eThekwini' ,
+                '@EMMInfo' : 'Ekurhuleni',
+                '@centlecutility' : 'Mangaung',
+                '@NMBmunicipality' : 'Nelson Mandela Bay',
+                '@CityTshwane' : 'Tshwane'}
+    
+    
+    df["municipality"] = df["Tweets"].apply(lambda df: ''.join([municipality_dict[key] for key in df.split() if key in municipality_dict.keys()]))
+    df["hashtags"] = df["Tweets"].apply(lambda df: [word.lower() for word in df.split() if word[0]=='#'])
+    df['municipality'] = df['municipality'].apply(lambda y: np.nan if len(y) == 0 else y)
+    df['hashtags'] = df['hashtags'].apply(lambda y: np.nan if len(y) == 0 else y)
 
+    return df
+
+<<<<<<< HEAD
     df['Split_Tweets']=df["Tweets"].str.lower() 
     df["Split_Tweets"]=df["Split_Tweets"].str.split()
     
@@ -102,4 +122,6 @@ def stop_words_remover(df):
        
     return(df)
 
+=======
+>>>>>>> 9337c90c71049c6db4fb3a62fddbfc0b629fa586
 ### END FUNCTION
