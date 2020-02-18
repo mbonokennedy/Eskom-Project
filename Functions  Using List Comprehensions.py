@@ -39,18 +39,13 @@ twitter_df = pd.read_csv(url)
 
 dates = twitter_df['Date'].to_list()
 
-#Function 5 as per request
-def number_of_tweets_per_day(df):
-    twitter_df['Dates'] = df['Date'].apply(lambda x : x.split(' ')[0])
-    twitter_dfs = twitter_df.groupby(twitter_df['Dates']).count()
+### START FUNCTION 3
+### Updated the function as per request
+def date_parser(dates):
+    # your code here
     
-    return(twitter_dfs)
+    new_list = (dates[0:10] for dates in dates)
+    answer = list(new_list)
+    return(answer)
 
-
-# Function 6 as per request
-def word_spliter(df):
-
-    df['Split_Tweets']=df["Tweets"].str.lower() 
-    df["Split_Tweets"]=df["Split_Tweets"].str.split()
-    
-    return(df)
+### END FUNCTION
