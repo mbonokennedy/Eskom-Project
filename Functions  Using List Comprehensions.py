@@ -96,3 +96,11 @@ def number_of_tweets_per_day(df):
     twitter_dfs = twitter_df.groupby(twitter_df['Dates']).count()
     
     return(twitter_dfs)
+
+#FUNCTION 6
+def word_spliter(df):
+
+    df['Split_Tweets']=df["Tweets"].str.lower() 
+    df["Split_Tweets"]=df["Split_Tweets"].str.split()
+    
+    return(df)
