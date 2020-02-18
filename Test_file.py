@@ -91,3 +91,15 @@ def number_of_tweets_per_day(df):
     return(twitter_dfs)#.iloc[])
 
 ### END FUNCTION
+
+### START FUNCTION
+def word_splitter(df):
+    # your code here
+    #Copy the tweets in the column Tweets to Split_Tweets and make them lower case
+    df['Split Tweets']=df['Tweets'].str.lower() 
+    #Split the tweets in Split_Tweets 
+    df['Split Tweets']=df['Split Tweets'].str.split()
+    
+    return(df)
+
+### END FUNCTION
