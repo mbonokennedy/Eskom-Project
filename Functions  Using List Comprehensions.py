@@ -88,3 +88,11 @@ def extract_municipality_hashtags(df):
     #solution = twitter_df["Tweets"].apply(lambda df: [municipality_dict[key] if key in list(municipality_dict.keys()) else np.nan for key in search])
     solution = twitter_df["Tweets"].apply(lambda df: [municipality_dict[key] for key in search if key in list(municipality_dict.keys())]).head(10)
     return(solution)
+
+
+#FUNCTION 5
+def number_of_tweets_per_day(df):
+    twitter_df['Dates'] = df['Date'].apply(lambda x : x.split(' ')[0])
+    twitter_dfs = twitter_df.groupby(twitter_df['Dates']).count()
+    
+    return(twitter_dfs)
